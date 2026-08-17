@@ -1,0 +1,233 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 14px);
+  --radius-3xl: calc(var(--radius) + 24px);
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-neon: var(--neon);
+  --color-ember: var(--ember);
+  --color-cream: var(--cream);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.5rem;
+  /* Quick Mode — sunlit, warm */
+  --background: oklch(0.972 0.019 85);
+  --foreground: oklch(0.245 0.045 45);
+  --card: oklch(0.99 0.012 88);
+  --card-foreground: oklch(0.245 0.045 45);
+  --popover: oklch(0.99 0.012 88);
+  --popover-foreground: oklch(0.245 0.045 45);
+  --primary: oklch(0.42 0.09 45);
+  --primary-foreground: oklch(0.98 0.015 85);
+  --secondary: oklch(0.93 0.03 80);
+  --secondary-foreground: oklch(0.3 0.06 45);
+  --muted: oklch(0.94 0.024 82);
+  --muted-foreground: oklch(0.5 0.04 60);
+  --accent: oklch(0.72 0.16 55);
+  --accent-foreground: oklch(0.22 0.05 45);
+  --neon: oklch(0.63 0.26 350);
+  --ember: oklch(0.7 0.18 50);
+  --cream: oklch(0.97 0.02 85);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.98 0.01 85);
+  --border: oklch(0.88 0.03 78);
+  --input: oklch(0.88 0.03 78);
+  --ring: oklch(0.72 0.16 55);
+
+  --gradient-warm: linear-gradient(135deg, oklch(0.93 0.06 78), oklch(0.86 0.11 60));
+  --gradient-neon: linear-gradient(120deg, var(--neon), var(--ember));
+  --shadow-soft: 0 24px 60px -28px oklch(0.35 0.08 45 / 0.45);
+  --shadow-lift: 0 40px 80px -32px oklch(0.3 0.09 40 / 0.55);
+  --glass: oklch(1 0 0 / 0.6);
+}
+
+.dark {
+  /* Experience Mode — cinematic vintage night */
+  --background: oklch(0.16 0.022 40);
+  --foreground: oklch(0.94 0.02 80);
+  --card: oklch(0.21 0.028 40);
+  --card-foreground: oklch(0.94 0.02 80);
+  --popover: oklch(0.2 0.028 40);
+  --popover-foreground: oklch(0.94 0.02 80);
+  --primary: oklch(0.8 0.13 65);
+  --primary-foreground: oklch(0.18 0.03 40);
+  --secondary: oklch(0.26 0.03 40);
+  --secondary-foreground: oklch(0.94 0.02 80);
+  --muted: oklch(0.25 0.028 40);
+  --muted-foreground: oklch(0.72 0.03 70);
+  --accent: oklch(0.72 0.19 45);
+  --accent-foreground: oklch(0.15 0.02 40);
+  --neon: oklch(0.72 0.27 340);
+  --ember: oklch(0.75 0.19 50);
+  --cream: oklch(0.93 0.03 82);
+  --destructive: oklch(0.65 0.2 25);
+  --destructive-foreground: oklch(0.96 0.01 80);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.72 0.27 340);
+
+  --gradient-warm: linear-gradient(135deg, oklch(0.24 0.04 40), oklch(0.18 0.03 30));
+  --shadow-soft: 0 24px 60px -28px oklch(0 0 0 / 0.8);
+  --shadow-lift: 0 40px 90px -30px oklch(0 0 0 / 0.9);
+  --glass: oklch(0.22 0.03 40 / 0.55);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    transition:
+      background-color 0.6s ease,
+      color 0.6s ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  blockquote {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+}
+
+@utility glass-panel {
+  background: var(--glass);
+  backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+
+@utility text-gradient-warm {
+  background-image: linear-gradient(100deg, var(--ember), var(--neon));
+  background-clip: text;
+  color: transparent;
+}
+
+@utility neon-text {
+  color: oklch(0.98 0.02 340);
+  text-shadow:
+    0 0 4px color-mix(in oklab, var(--neon) 90%, white),
+    0 0 12px var(--neon),
+    0 0 28px var(--neon),
+    0 0 60px color-mix(in oklab, var(--neon) 70%, transparent),
+    0 0 120px color-mix(in oklab, var(--neon) 50%, transparent);
+  animation: neon-flicker 6s infinite;
+}
+
+@utility neon-dim {
+  color: color-mix(in oklab, var(--neon) 40%, transparent);
+  text-shadow: 0 0 6px color-mix(in oklab, var(--neon) 30%, transparent);
+}
+
+@utility card-lift {
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.5s ease;
+  &:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: var(--shadow-lift);
+  }
+}
+
+@keyframes neon-flicker {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.55;
+  }
+  94% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0.7;
+  }
+  97% {
+    opacity: 1;
+  }
+}
+
+@keyframes vinyl-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility spin-vinyl {
+  animation: vinyl-spin 3.5s linear infinite;
+}
+
+@keyframes steam-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) scale(1.6);
+  }
+}
+
+@utility story-link {
+  position: relative;
+  display: inline-block;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
