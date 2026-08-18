@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "./theme";
@@ -5,6 +6,21 @@ import { useTheme } from "./theme";
 export function ThemeToggle() {
   // theme.tsx में अपडेट किए गए isExperienceMode का सीधा इस्तेमाल
   const { isExperienceMode, toggle } = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+
+  // मोबाइल डिवाइस डिटेक्ट करने का लॉजिक
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile(); // कंपोनेंट माउंट होते ही चेक करेगा
+    
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // अगर यूजर मोबाइल पर है, तो यह बटन रेंडर ही नहीं होगा
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <button

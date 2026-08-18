@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ThemeProvider, useTheme } from "@/components/theme";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { CafeCanvas } from "@/components/experience/CafeCanvas";
@@ -41,13 +41,27 @@ function Index() {
 function MainContent() {
   const { isExperienceMode } = useTheme();
   const [bouquet, setBouquet] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   const reserve = () => setBouquet(true);
+
+  // मोबाइल डिवाइस डिटेक्ट करने का लॉजिक (Tailwind के 'md' ब्रेकपॉइंट 768px के बेस पर)
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile(); // लोड होते ही चेक करेगा
+    
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // 3D सिर्फ तब रेंडर होगा जब एक्सपीरियंस मोड ऑन हो और डिवाइस मोबाइल न हो
+  const render3D = isExperienceMode && !isMobile;
 
   return (
     <>
-      {isExperienceMode ? (
+      {render3D ? (
         <>
-          {/* 3D Experience Mode */}
+          {/* 3D Experience Mode (Strictly PC Only) */}
           <CafeCanvas />
           
           {/* 3D मोड में से बाहर निकलने के लिए Floating Theme Toggle */}
@@ -56,7 +70,7 @@ function MainContent() {
           </div>
         </>
       ) : (
-        /* 2D Quick Mode */
+        /* 2D Quick Mode (Mobile के लिए हमेशा, PC के लिए जब टॉगल ऑफ हो) */
         <main>
           <Hero onReserve={reserve} />
           <About />
@@ -72,7 +86,7 @@ function MainContent() {
       </div>
 
       {/* Mobile Bar सिर्फ Quick Mode में दिखेगा */}
-      {!isExperienceMode && <MobileBar onReserve={reserve} />}
+      {!render3D && <MobileBar onReserve={reserve} />}
       
       <BouquetModal open={bouquet} onClose={() => setBouquet(false)} />
     </>
